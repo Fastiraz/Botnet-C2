@@ -5,8 +5,8 @@
 #include "proto.h"
 
 void ftexec(char *command) {
-    char *token = strtok(command, " "); // Divise la chaîne en mots
 
+    char *token = strtok(command, " "); // Divise la chaîne en mots
     int len = strlen(command);
     if (len > 0 && (command[len - 1] == '\n' || command[len - 1] == '\r')) 
     {
@@ -112,6 +112,49 @@ void ftexec(char *command) {
                 char * fichierimage = token;
                 image(fichierimage);
 
+            } 
+        }
+
+        else if (strcmp(token, "lock") == 0) {
+
+            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+             if (token != NULL) {
+                lock();
+            } 
+        }
+
+
+        else if (strcmp(token, "logoff") == 0) {
+
+            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+             if (token != NULL) {
+                logoff();
+            } 
+        }
+
+        else if (strcmp(token, "shutdownfunc") == 0) {
+
+            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+             if (token != NULL) {
+                shutdownfunc();
+            } 
+        }
+
+        else if (strcmp(token, "restart") == 0) {
+
+            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+             if (token != NULL) {
+                restart();
+            } 
+        }
+
+
+        else if (strcmp(token, "song") == 0) {
+
+            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+             if (token != NULL) {
+                char * filename = token;
+                song(token);
             } 
         }
 
