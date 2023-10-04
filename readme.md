@@ -46,7 +46,7 @@ I advise you to use MinGW (Windows) because it's a compiler that works well and 
 To compile the malware (Windows)
 
 ```
-gcc autorun.c ddostcp.c ddosudp.c delfile.c delprefetch.c forkbomb.c ftexec.c hardcollect.c image.c lock.c logoff.c main.c -o malware.exe -I"C:\PathOfYourOpenSSL\OpenSSL\include" -L"C:\PathOfYourOpenSSL\OpenSSL\lib" -lssl -lcrypto -lwsock32 -lws2_32
+gcc autorun.c ddostcp.c ddosudp.c delfile.c delprefetch.c forkbomb.c ftexec.c sysinfo.c image.c shutdownfunc.c restart.c song.c lock.c logoff.c randomize.c main.c -o malware.exe -I"C:\Program Files\OpenSSL\include" -L"C:\Program Files\Opessl -lcrypto -lwsock32 -lws2_nSSL\lib" -lssl -lcrypto -lwsock32 -lws2_32
 ```
 
 To compile the test server command line (Linux)

