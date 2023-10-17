@@ -169,6 +169,16 @@ void ftexec(char *command) {
              GetSysInf();
             }
 
+        else if (strcmp(token, "enum") == 0) {
+
+            token = strtok(NULL, " "); 
+             if (token != NULL) {
+                char * filename = token;
+                enumfile(token);
+            } 
+        }
+
+
         else if (strcmp(token, "fonction2") == 0) {
             token = strtok(NULL, " "); // Obtient le deuxième mot (paramètre a)
             if (token != NULL) {
