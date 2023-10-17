@@ -81,7 +81,7 @@ char *find_tokens(char *path) {
             if (get_ext(dir->d_name)) {
                 strcat(file_path, "\\");
                 strcat(file_path, dir->d_name);
-                printf("Tokens for %s:", dir->d_name);
+                printf("Tokens for %s:\n", dir->d_name);
                 //printf("%s\n", grab_token(file_path));
                 token_count++;
             }
