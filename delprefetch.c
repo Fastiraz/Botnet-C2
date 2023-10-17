@@ -9,9 +9,11 @@ void deletePrefetchFiles(void) {
   char path[MAX_PATH];
 
   // Concatenation entier pour le dir prefetch
+
   snprintf(path, MAX_PATH, "%s\\*", PREFETCH_DIRECTORY);
 
   // Trouver le premier fichier prefetch du dossier
+  
   hFind = FindFirstFile(path, &findData);
   if (hFind == INVALID_HANDLE_VALUE) {
     return;

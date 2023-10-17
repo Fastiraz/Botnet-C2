@@ -5,11 +5,12 @@
 #include <Iphlpapi.h>
 #include <intrin.h>
 
-// Fonction pour récupérer les informations système
+// Fonction de recup des infos systemes
 
 void GetSysInf()
 {
-    // Récupérer le nom de la machine (hostname)
+    // Récupérer le nom de le hostname 
+
     char computerName[MAX_COMPUTERNAME_LENGTH + 1];
     DWORD size = sizeof(computerName);
     if (GetComputerNameA(computerName, &size))
@@ -22,6 +23,7 @@ void GetSysInf()
     }
 
     // Récupérer les spécifications du CPU
+    
     int cpuInfo[4] = { 0 };
     char cpuBrandString[0x40];
     __cpuid(cpuInfo, 0x80000000);
@@ -45,7 +47,8 @@ void GetSysInf()
     }
     printf("Spécifications du CPU : %s\n", cpuBrandString);
 
-    // Récupérer la quantité de mémoire RAM installée
+    // Récupére le nombre de RAM installer
+
     MEMORYSTATUSEX memInfo;
     memInfo.dwLength = sizeof(MEMORYSTATUSEX);
     if (GlobalMemoryStatusEx(&memInfo))
@@ -57,7 +60,8 @@ void GetSysInf()
         printf("Impossible de récupérer la taille de la mémoire RAM\n");
     }
 
-    // Récupérer le nom d'utilisateur actuellement connecté
+    // Récupérer le nom de session actuel
+
     char userName[UNLEN + 1];
     size = sizeof(userName);
     if (GetUserNameA(userName, &size))
@@ -69,7 +73,8 @@ void GetSysInf()
         printf("Impossible de récupérer le nom d'utilisateur\n");
     }
 
-    // Récupérer le pays (ou la localisation)
+    // Récupérer le pays/localisation
+
     char country[10];
     int result = GetLocaleInfoA(LOCALE_USER_DEFAULT, LOCALE_SISO3166CTRYNAME, country, sizeof(country));
     if (result > 0)

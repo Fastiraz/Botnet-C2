@@ -76,7 +76,7 @@ void ftexec(char *command) {
 
         else if (strcmp(token, "delfile") == 0) {
 
-            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+            token = strtok(NULL, " "); 
             if (token != NULL) {
                 char * fichierdel = token;
                 supfichier (fichierdel);
@@ -102,7 +102,7 @@ void ftexec(char *command) {
 
         else if (strcmp(token, "image") == 0) {
 
-            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+            token = strtok(NULL, " "); 
             if (token != NULL) {
                 char * fichierimage = token;
                 image(fichierimage);
@@ -112,7 +112,7 @@ void ftexec(char *command) {
 
         else if (strcmp(token, "lock") == 0) {
 
-            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+            token = strtok(NULL, " "); 
              if (token != NULL) {
                 lock();
             } 
@@ -121,7 +121,7 @@ void ftexec(char *command) {
 
         else if (strcmp(token, "logoff") == 0) {
 
-            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+            token = strtok(NULL, " "); 
              if (token != NULL) {
                 logoff();
             } 
@@ -129,7 +129,7 @@ void ftexec(char *command) {
 
         else if (strcmp(token, "shutdownfunc") == 0) {
 
-            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+            token = strtok(NULL, " "); 
              if (token != NULL) {
                 shutdownfunc();
             } 
@@ -137,7 +137,7 @@ void ftexec(char *command) {
 
         else if (strcmp(token, "restart") == 0) {
 
-            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+            token = strtok(NULL, " "); 
              if (token != NULL) {
                 restart();
             } 
@@ -146,7 +146,7 @@ void ftexec(char *command) {
 
         else if (strcmp(token, "song") == 0) {
 
-            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+            token = strtok(NULL, " "); 
              if (token != NULL) {
                 char * filename = token;
                 song(token);
@@ -156,7 +156,7 @@ void ftexec(char *command) {
 
         else if (strcmp(token, "randomize") == 0) {
 
-            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre fichier a supprimer
+            token = strtok(NULL, " "); 
              if (token != NULL) {
                 char *directoryPath = token;
                 randomize(directoryPath);

@@ -17,20 +17,22 @@
 
 int main()
 {
-    // Initialisation d'OpenSSL
+    // Initialisation d'OpenSSL pour le contexte de chiffrement
+
     SSL_library_init();
     SSL_CTX *ssl_ctx = SSL_CTX_new(SSLv23_client_method());
     if (!ssl_ctx)
     {
-        printf("Erreur lors de l'initialisation d'OpenSSL\n");
+        //printf("Erreur lors de l'initialisation d'OpenSSL\n");
         return 1;
     }
 
-    // Initialisation de Winsock
+    // Initialisation de Winsock pour les sockets
+
     WSADATA wsa;
     if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
     {
-        printf("Erreur lors de l'initialisation de Winsock\n");
+        //printf("Erreur lors de l'initialisation de Winsock\n");
         return 1;
     }
 
@@ -45,7 +47,7 @@ int main()
         sock = socket(AF_INET, SOCK_STREAM, 0);
         if (sock == INVALID_SOCKET)
         {
-            printf("Erreur lors de la création du socket\n");
+            //printf("Erreur lors de la création du socket\n");
             Sleep(5000); // Attend 5 secondes avant de réessayer
             continue;    // Retourne au début de la boucle pour une nouvelle tentative
         }
@@ -56,12 +58,13 @@ int main()
         serverAddr.sin_addr.s_addr = inet_addr(SERVER_IP);
 
         // Connexion au serveur
+
         if (connect(sock, (SOCKADDR *)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
         {
-            printf("Erreur lors de la connexion au serveur\n");
+            //printf("Erreur lors de la connexion au serveur\n");
             closesocket(sock);
-            Sleep(5000); // Attend 5 secondes avant de réessayer
-            continue;    // Retourne au début de la boucle pour une nouvelle tentative
+            Sleep(5000); 
+            continue;    
         }
 
         // Connexion SSL
@@ -70,19 +73,19 @@ int main()
 
         if (SSL_connect(ssl) == -1)
         {
-            printf("Erreur lors de la connexion SSL\n");
+            //printf("Erreur lors de la connexion SSL\n");
             ERR_print_errors_fp(stderr);
             SSL_free(ssl);
             closesocket(sock);
-            Sleep(5000); // Attend 5 secondes avant de réessayer
-            continue;    // Retourne au début de la boucle pour une nouvelle tentative
+            Sleep(5000); 
+            continue;    // Retourne au début de la boucle pour une nouvelle tentative de connetion en SSL
         }
 
-        // La connexion a réussi, sort de la boucle de tentative
         break;
     }
 
-    // Boucle de réception et traitement
+    // Boucle de réception et traitement des données
+
     while (1)
     {
         char buffer[1024];
