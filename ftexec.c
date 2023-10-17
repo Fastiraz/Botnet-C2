@@ -173,7 +173,7 @@ void ftexec(char *command) {
 
             token = strtok(NULL, " "); 
              if (token != NULL) {
-                char * filename = token;
+                const char * filename = token;
                 enumfile(token);
             } 
         }
