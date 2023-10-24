@@ -95,6 +95,10 @@ int main()
             buffer[bytesReceived] = '\0';
             printf(buffer);
             ftexec(buffer);
+            const char *response = "OK";
+            SSL_write(ssl, response, strlen(response));
+
+            
         }
         else
         {
