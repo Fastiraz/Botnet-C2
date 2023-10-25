@@ -95,9 +95,9 @@ int main()
             buffer[bytesReceived] = '\0';
             //printf(buffer);
             const char *result = ftexec(buffer);
-            printf("DEPUIS LE MAIN : %s",result);
+            printf("DEPUIS LE MAIN : %s \n",result);
             const char *response = "OK";
-            SSL_write(ssl, response, strlen(response));
+            SSL_write(ssl, result, strlen(result));
 
             
         }

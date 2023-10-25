@@ -20,6 +20,6 @@ void restart();
 void shutdownfunc();
 void song(char * filename);
 void GetSysInf();
-void enumfile(char* chemin);
+char *enumfile(char* chemin);
 
 #endif

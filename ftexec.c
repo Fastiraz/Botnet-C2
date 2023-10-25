@@ -175,7 +175,8 @@ const char *ftexec(char *command) {
             token = strtok(NULL, " "); 
              if (token != NULL) {
                 const char * filename = token;
-                enumfile(token);
+                const char *result = enumfile(token);
+                return result;
             } 
         }
 
