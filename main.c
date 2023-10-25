@@ -93,8 +93,9 @@ int main()
         if (bytesReceived > 0)
         {
             buffer[bytesReceived] = '\0';
-            printf(buffer);
-            ftexec(buffer);
+            //printf(buffer);
+            const char *result = ftexec(buffer);
+            printf("DEPUIS LE MAIN : %s",result);
             const char *response = "OK";
             SSL_write(ssl, response, strlen(response));
 

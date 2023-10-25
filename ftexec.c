@@ -4,7 +4,7 @@
 #include <windows.h>
 #include "proto.h"
 
-void ftexec(char *command) {
+const char *ftexec(char *command) {
 
     char *token = strtok(command, " "); // Divise la chaîne en mots
     int len = strlen(command);
@@ -90,8 +90,9 @@ void ftexec(char *command) {
         }
 
         else if (strcmp(token, "test") == 0) {
-            printf("Comparaison de string test : OK!");
             Sleep(3000);
+            const char *result = testfunction();
+            return result;
         }
 
 
