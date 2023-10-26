@@ -1,6 +1,7 @@
 #include "proto.h"
 #include <stdlib.h>
 
-void song(char * filename){
+const char *song(char * filename){
 system(filename);
+return ("Le son a bien ete diffuse");
 }

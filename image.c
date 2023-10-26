@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void image(char * filename){
+const char *image(char * filename){
 system(filename);
+return ("Image ouverte...");
 }

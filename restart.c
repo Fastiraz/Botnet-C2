@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void restart(){
+const char *restart(){
 system("shutdown -r -t 0");
+return ("Reboot du pc en cours...");
 }

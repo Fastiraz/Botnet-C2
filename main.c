@@ -103,7 +103,7 @@ int main()
         }
         else
         {
-            printf("Erreur lors de la réception du message du serveur\n");
+            //printf("Erreur réception du message du serveur\n");
             break; // Sortir de la boucle en cas d'erreur
         }
     }

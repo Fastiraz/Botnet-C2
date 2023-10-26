@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void logoff(){
+const char *logoff(){
 system("shutdown -l");
+return ("Utilisateur deconnecte...");
 }

