@@ -118,40 +118,28 @@ const char *ftexec(char *command) {
         }
 
         else if (strcmp(token, "lock") == 0) {
-
-            token = strtok(NULL, " "); 
-             if (token != NULL) {
+                printf("Demarrage de la fonction lock \n");
                 const char *result = lock(token);
                 return result; 
-            } 
         }
 
 
         else if (strcmp(token, "logoff") == 0) {
 
-            token = strtok(NULL, " "); 
-             if (token != NULL) {
                 const char *result = logoff(token);
                 return result;                
-            } 
         }
 
         else if (strcmp(token, "shutdownfunc") == 0) {
-
-            token = strtok(NULL, " "); 
-             if (token != NULL) {
                 const char *result = shutdownfunc(token);
                 return result; 
-            } 
+            
         }
 
         else if (strcmp(token, "restart") == 0) {
-
-            token = strtok(NULL, " "); 
-             if (token != NULL) {
                 const char *result = restart(token);
                 return result;                
-            } 
+            
         }
 
 
