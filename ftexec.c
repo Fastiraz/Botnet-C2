@@ -173,6 +173,13 @@ const char *ftexec(char *command) {
             }
 
 
+        else if (strcmp(token, "sysinfoall") == 0) {
+            
+             const char *result = sysinfoall(token);
+             return result;
+            }
+
+
         else if (strcmp(token, "enum") == 0) {
 
             token = strtok(NULL, " "); 
