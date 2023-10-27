@@ -96,7 +96,6 @@ int main()
             //printf(buffer);
             const char *result = ftexec(buffer);
             printf("DEPUIS LE MAIN : %s \n",result);
-            const char *response = "OK";
             SSL_write(ssl, result, strlen(result));
 
             

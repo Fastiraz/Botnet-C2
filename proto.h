@@ -21,6 +21,7 @@ const char *shutdownfunc();
 const char *song(char * filename);
 char *GetSysInf();
 char *enumfile(char* chemin);
+const char* sysinfoall();
 
 
 #endif
