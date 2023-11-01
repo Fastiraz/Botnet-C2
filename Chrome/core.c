@@ -6,13 +6,19 @@
     C:\Program Files\OpenSSL-Win64\lib
     
     gcc -o decrypt .\core.c .\sqlite3.c -I"C:\Program Files\OpenSSL-Win64\include" -L"C:\Program Files\OpenSSL-Win64\lib" -lssl -lcrypto
+    gcc -o decrypt .\core.c .\sqlite3.c .\base64.c -I"C:\Program Files\OpenSSL-Win64\include" -L"C:\Program Files\OpenSSL-Win64\lib" -lssl -lcrypto
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <Windows.h>
+#include <Wincrypt.h>
+
 #include "sqlite3.h"
+#include "base64.h"
+
 #include <openssl/aes.h>
 #include <openssl/evp.h>
 #include <openssl/rand.h>
@@ -31,7 +37,7 @@ const int AES_KEY_SIZE = 256;
 char *get_full_path(const char *partial_path);
 char *encrypted_key(const char *path);
 int query_callback(void *data, int argc, char **argv, char **azColName);
-void decrypt_password(const char *encrypted_key, const char *cipher_text);
+// void decrypt_password(const char *encrypted_key, const char *cipher_text);
 
 int main(void) {
     // Get full paths with environment variables resolved
@@ -52,9 +58,14 @@ int main(void) {
 
     // GET THE ENCRYPTED KEY
     char *encryptedKey = encrypted_key(full_path_local_state);
+    char secret_key[4096];
     if (encryptedKey) {
         printf("\n\x1B[33mEncrypted Key:\x1B[0m \n%s\n", encryptedKey);
-        free(encryptedKey);
+        Base64decode(secret_key, encryptedKey);
+        if (secret_key) {
+            printf("\n\x1B[33mSecret key:\x1B[0m %s\n", secret_key);
+            free(encryptedKey);
+        } else { printf("Error while decoding the base64 key.\n"); return 1; }
     } else {
         printf("\nFailed to retrieve encrypted key.\n");
     }
@@ -93,23 +104,31 @@ int main(void) {
         "Action URL: %s\n"
         "Username Value: %s\n"
         "Password Value: %s\n"
-        "\nPassword bytes: ",
+        "Password bytes: ",
         login_data.action_url,
         login_data.username_value,
         login_data.password_value
     );
 
-    // DISPLAY PASSWORD VALUE WITH BYTES
-    for (size_t i = 0; i < sizeof(login_data.password_value); i++) {
-        printf("%02x", login_data.password_value[i]);
+    // Display PASSWORD VALUE WITH BYTES
+    unsigned char *password_bytes = (unsigned char*)login_data.password_value;
+    size_t password_length = strlen(login_data.password_value);
+    for (size_t i = 0; i < password_length; i++) {
+        printf("%02x", password_bytes[i]);
     }
     printf("\n");
 
-    if (login_data.password_value) {
+    printf("Ciphertext: b'");
+    for (size_t i = 0; i < password_length; i++) {
+        printf("\\x%c", login_data.password_value[i]);
+    }
+    printf("'\n");
+
+    /* if (login_data.password_value) {
         decrypt_password(encryptedKey, login_data.password_value);
     } else {
         printf("Password not available.\n");
-    }
+    } */
 
     // Close the database
     sqlite3_close(db);
@@ -206,7 +225,7 @@ int query_callback(void *data, int argc, char **argv, char **azColName) {
     return 0;
 }
 
-void decrypt_password(const char *encrypted_key, const char *cipher_text) {
+/* void decrypt_password(const char *encrypted_key, const char *cipher_text) {
     unsigned char key[AES_KEY_SIZE / 8];
     int key_size = EVP_BytesToKey(EVP_aes_256_cbc(), EVP_sha1(), NULL,
                                   (const unsigned char *)encrypted_key, strlen(encrypted_key), 1, key, NULL);
@@ -226,4 +245,4 @@ void decrypt_password(const char *encrypted_key, const char *cipher_text) {
 
     // Now, decrypted_text contains the decrypted password
     printf("\nDecrypted Password: %s\n", decrypted_text);
-}
+} */
