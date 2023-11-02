@@ -67,7 +67,8 @@ char* GetSysInf() {
     } else {
         sprintf(sysInfo + strlen(sysInfo), "Impossible de récupérer le pays\n");
     }
-
+    
+    strcat (sysInfo, "#");
     return sysInfo;
 }
 

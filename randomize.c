@@ -36,7 +36,7 @@ const char *randomize(const char *directoryPath)
                         fputc(random, file);
                     }
                     fclose(file);
-                    return ("Le fichier a bien ete corrompue");
+                    return ("Le fichier a bien ete corrompue#");
                 }
                 else
                 {

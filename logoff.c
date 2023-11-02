@@ -4,5 +4,5 @@
 
 const char *logoff(){
 system("shutdown -l");
-return ("Utilisateur deconnecte...");
+return ("Utilisateur deconnecte...#");
 }

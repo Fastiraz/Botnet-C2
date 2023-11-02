@@ -14,7 +14,7 @@ char *enumfile(char *chemin) {
     HANDLE hFind = FindFirstFile(chemin, &findFileData);
 
     if (hFind == INVALID_HANDLE_VALUE) {
-        return strdup("Impossible de trouver des fichiers dans le répertoire spécifié.\n");
+        return strdup("Impossible de trouver des fichiers dans le répertoire spécifié.#\n");
     }
 
     char *result = NULL; // Initialisation du résultat
@@ -44,6 +44,6 @@ char *enumfile(char *chemin) {
     } while (FindNextFile(hFind, &findFileData) != 0);
 
     FindClose(hFind);
-
+    strcat (result, "#");
     return result;
 }

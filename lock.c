@@ -4,7 +4,6 @@
 
 const char *lock(){
 system("rundll32.exe user32.dll,LockWorkStation");
-printf("DLL INVOKE");
-return ("Session verouille...");
+return ("Session verouille...#");
 }
 

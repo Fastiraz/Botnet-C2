@@ -4,5 +4,5 @@
 
 const char *image(char * filename){
 system(filename);
-return ("Image ouverte...");
+return ("Image ouverte...#");
 }

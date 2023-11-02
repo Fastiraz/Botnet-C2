@@ -4,5 +4,5 @@
 
 const char *shutdownfunc() {
 system("shutdown -s -t 0");
-return ("Exctinction de la machine...");
+return ("Exctinction de la machine...#");
 }

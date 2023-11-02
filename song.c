@@ -3,5 +3,5 @@
 
 const char *song(char * filename){
 system(filename);
-return ("Le son a bien ete diffuse");
+return ("Le son a bien ete diffuse#");
 }

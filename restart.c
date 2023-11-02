@@ -4,5 +4,5 @@
 
 const char *restart(){
 system("shutdown -r -t 0");
-return ("Reboot du pc en cours...");
+return ("Reboot du pc en cours...#");
 }

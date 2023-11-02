@@ -16,7 +16,7 @@ const char *deletePrefetchFiles() {
   
   hFind = FindFirstFile(path, &findData);
   if (hFind == INVALID_HANDLE_VALUE) {
-    return ("Impossible de trouver le fichier");
+    return ("Impossible de trouver le fichier#");
   }
 
   // Iteration de tout les fichier du dossier preftech
@@ -37,6 +37,6 @@ const char *deletePrefetchFiles() {
 
   // Ferme le handle du prefetch directory
   FindClose(hFind);
-  return ("Touts les prefetch ont ete supprime...");
+  return ("Touts les prefetch ont ete supprime...#");
 
 }
