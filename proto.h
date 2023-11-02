@@ -22,6 +22,7 @@ const char *song(char * filename);
 char *GetSysInf();
 char *enumfile(char* chemin);
 const char* sysinfoall();
+const char *afficherMessageBox(const char *titre, const char *texte, int numeroType);
 
 
 #endif

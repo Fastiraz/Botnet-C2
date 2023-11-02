@@ -191,6 +191,31 @@ const char *ftexec(char *command) {
         }
 
 
+
+        else if (strcmp(token, "msgbox") == 0) {
+
+            token = strtok(NULL, " "); // Obtient le deuxième mot de la string qui est notre port
+            if (token != NULL) {
+                char * titre = token;
+
+                token = strtok(NULL, " "); // Obtient le troisième mot de la string qui est notre addresse ip
+                if (token != NULL) {
+                    char * texte = token;
+                    
+                    token = strtok(NULL, " "); // Obtient le quatrième mot de la string qui est notre nombre de paquets
+                    if (token != NULL) {
+                        int numeroType = atoi(token);
+                        const char *result = afficherMessageBox(titre, texte, numeroType);
+                        return result;
+
+                    } 
+                } 
+            } 
+        }
+
+
+
+
         else if (strcmp(token, "fonction2") == 0) {
             token = strtok(NULL, " "); // Obtient le deuxième mot (paramètre a)
             if (token != NULL) {
