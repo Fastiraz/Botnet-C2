@@ -6,7 +6,7 @@ const char *supfichier(char* filename) {
   // Supprime ce fichier
   if (remove(filename) != 0) {
   } else {
-    return("Fichier supprime\n");
+    return("Fichier supprime#\n");
   }
 
 }
