@@ -44,7 +44,7 @@ int main() {
         close(serverSocket);
         return 1;
     }
-
+    printf("\n===-------- C2 DEBUG TOOLS v1.2 --------===\n\n");
     printf("En attente de connexion...\n");
 
     // Acceptation de la connexion entrante
@@ -158,33 +158,26 @@ int main() {
                 // Listes les fonctions
                 system("clear");
                 printf("\n===-------- C2 DEBUG TOOLS v1.2 --------===\n\n");
-                printf("1 - DDOS UDP : int ddosudp(int port, char * addrip, int nbpackets, int sizepacket, int delai ); >> Envoie des packets raw udp en fonction des arguments.\n"
-                        "2 - DDOS TCP : int ddostcp(int port, char * addrip, int nbpackets, int sizepacket, int); >> Envoie des packets raw tcp en fonction des arguments. \n"
-                        "3 - ForkBomb : const char* forkbomb(); >> Créer une bombe fork et fais sature la RAM de la machine\n"
-                        "4 - Enumeration file : char *enumfile(char* chemin); >> Enumère tout les fichiers qui se situe dans un répertoire \n"
-                        "5 - Restart : const char *restart(); >> Redemarre la machine cible\n"
-                        "6 - Shutdown : const char *shutdownfunc(); >> Extinction de la machine cible\n"
-                        "7 - System info : char *GetSysInf(); >> Retourne les valeurs infos du systeme cible\n"
-                        "8 - System info all: char *sysinfall(); >> Retourne les valeurs infos du systeme cible\n"
-                        "9 - Sound : const char *sound(char * filename); >> Joue le son en argument sur la machine cible\n"
-                        "10 - Randomize : const char *randomize(const char *directoryPath); >> Cible un fichier sur la machine cible pour le rednre inutilisable\n"
-                        
-                        "11 - delfichier : const char *supfichier(char* filename); >> Supprime un fichier passe en argument sur la machine cible \n"
-                        
-                                                
-                        "12 - delprefetch : const char* deletePrefetchFiles(); >> Supprime les prefetch sur la machine cible \n"
-                        
-
-                        "13 - logoff : \n"
-                        
-                        "14 - image :\n"
-
-
+                printf("Liste des commandes : \n\n");
+                printf("1 - ddostcp port addrip nbpackets sizepacket delay\n"
+                        "2 - ddosudp port addrip nbpackets sizepacket delay \n"
+                        "3 - forkbomb\n"
+                        "4 - enum C:\\Path\\To\\Your\\File\\* \n"
+                        "5 - restart \n"
+                        "6 - shutdownfunc \n"
+                        "7 - sysinfo \n"
+                        "8 - sysinfoall\n"
+                        "9 - sound imageName.wav \n"
+                        "10 - randomize filetorandomized.txt \n"
+                        "11 - delfile C:\\Path\\ToYour\\file.exe \n"                  
+                        "12 - delprefetch \n"
+                        "13 - logoff \n"
+                         "14 - image image.jpeg\n"
                         "15 - lock :\n"
-                         
                         "16 - testfunction :\n"
-                        
-                        "17 - En developpement...\n\n\n");
+                        "17 - msgbox title text boxtype\n"
+                        "18 - getfile filename.bin\n"
+                        "19 - WIP...");
                         printf("Appuie sur une touche pour revenir au menu...");
 
                 getchar();
