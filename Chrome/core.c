@@ -7,6 +7,7 @@
     
     gcc -o decrypt .\core.c .\sqlite3.c -I"C:\Program Files\OpenSSL-Win64\include" -L"C:\Program Files\OpenSSL-Win64\lib" -lssl -lcrypto
     gcc -o decrypt .\core.c .\sqlite3.c .\base64.c -I"C:\Program Files\OpenSSL-Win64\include" -L"C:\Program Files\OpenSSL-Win64\lib" -lssl -lcrypto
+    gcc -o decrypt .\core.c .\sqlite3.c .\base64.c -I"C:\Program Files\OpenSSL-Win64\include" -L"C:\Program Files\OpenSSL-Win64\lib" -lssl -lcrypto -lcrypt32
 */
 
 #include <stdio.h>
@@ -37,7 +38,7 @@ const int AES_KEY_SIZE = 256;
 char *get_full_path(const char *partial_path);
 char *encrypted_key(const char *path);
 int query_callback(void *data, int argc, char **argv, char **azColName);
-// void decrypt_password(const char *encrypted_key, const char *cipher_text);
+void decrypt_password(const char *encrypted_key, const char *cipher_text);
 
 int main(void) {
     // Get full paths with environment variables resolved
@@ -63,7 +64,7 @@ int main(void) {
         printf("\n\x1B[33mEncrypted Key:\x1B[0m \n%s\n", encryptedKey);
         Base64decode(secret_key, encryptedKey);
         if (secret_key) {
-            printf("\n\x1B[33mSecret key:\x1B[0m %s\n", secret_key);
+            printf("\n\x1B[33mDecrypted secret key:\x1B[0m %s\n", secret_key);
             free(encryptedKey);
         } else { printf("Error while decoding the base64 key.\n"); return 1; }
     } else {
@@ -103,32 +104,17 @@ int main(void) {
         "\n\x1B[33mChrome logins data\x1B[0m\n"
         "Action URL: %s\n"
         "Username Value: %s\n"
-        "Password Value: %s\n"
-        "Password bytes: ",
+        "Ciphertext: %s\n",
         login_data.action_url,
         login_data.username_value,
         login_data.password_value
     );
 
-    // Display PASSWORD VALUE WITH BYTES
-    unsigned char *password_bytes = (unsigned char*)login_data.password_value;
-    size_t password_length = strlen(login_data.password_value);
-    for (size_t i = 0; i < password_length; i++) {
-        printf("%02x", password_bytes[i]);
-    }
-    printf("\n");
-
-    printf("Ciphertext: b'");
-    for (size_t i = 0; i < password_length; i++) {
-        printf("\\x%c", login_data.password_value[i]);
-    }
-    printf("'\n");
-
-    /* if (login_data.password_value) {
-        decrypt_password(encryptedKey, login_data.password_value);
+    if (login_data.password_value) {
+        decrypt_password(secret_key, login_data.password_value);
     } else {
         printf("Password not available.\n");
-    } */
+    } 
 
     // Close the database
     sqlite3_close(db);
@@ -243,6 +229,42 @@ int query_callback(void *data, int argc, char **argv, char **azColName) {
 
     AES_cbc_encrypt(decrypted_text, decrypted_text, cipher_text_len, &aes_key, iv, AES_DECRYPT);
 
+    // Null-terminate the decrypted text to print it as a string
+    decrypted_text[cipher_text_len] = '\0';
+
     // Now, decrypted_text contains the decrypted password
     printf("\nDecrypted Password: %s\n", decrypted_text);
 } */
+
+
+void decrypt_password(const char *encrypted_key, const char *cipher_text) {
+    DATA_BLOB dataIn, dataOut;
+
+    // Initialize dataIn with cipher text (assuming cipher_text is in hexadecimal format)
+    dataIn.pbData = (BYTE *)cipher_text;
+    dataIn.cbData = strlen(cipher_text) / 2; // Length of cipher text in bytes
+
+    DATA_BLOB encryptedKeyBlob;
+    encryptedKeyBlob.pbData = (BYTE *)encrypted_key;
+    encryptedKeyBlob.cbData = strlen(encrypted_key);
+
+    // Decrypt the data using CryptUnprotectData
+    if (CryptUnprotectData(
+            &dataIn,
+            NULL, // No description is needed for decryption
+            &encryptedKeyBlob, // Encrypted key for decryption
+            NULL, // Reserved
+            NULL, // No prompt structure
+            0, // Flags
+            &dataOut)) {
+        printf("Decryption successful.\n");
+        
+        // Assuming decrypted data is a string (null-terminated), print it
+        printf("Decrypted Password: %s\n", dataOut.pbData);
+
+        // Free the decrypted data after use
+        LocalFree(dataOut.pbData);
+    } else {
+        printf("Decryption failed.\n");
+    }
+}
