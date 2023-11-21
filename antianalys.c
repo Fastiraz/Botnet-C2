@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-// Fonction pour lanti-forensics, ferme les processus spécifié en liste
+// Fonction anti-forensics, ferme les processus
+
 void closeProcesses(const char* processName) {
     HANDLE hProcessSnap;
     PROCESSENTRY32 pe32;
