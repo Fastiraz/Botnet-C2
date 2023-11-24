@@ -15,6 +15,17 @@
     //HWND myWindows = GetConsoleWindow(); Cache le prompt pour l'utilisateur
     //ShowWindow(myWindows, SW_HIDE);
 
+void ProcessFunction() {
+    // La fonction que vous voulez exécuter en parallèle
+
+    while (1) {
+        // Votre traitement ici
+        // Par exemple :
+        printf("Fonction en cours d'exécution...\n");
+        Sleep(3000); // Attente d'une seconde pour simuler un traitement
+    }
+}
+
 int main()
 {
     // Initialisation d'OpenSSL pour le contexte de chiffrement
@@ -35,6 +46,15 @@ int main()
         //printf("Erreur lors de l'initialisation de Winsock\n");
         return 1;
     }
+
+
+    // Création d'un thread pour exécuter la fonction en parallèle
+    HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ProcessFunction, NULL, 0, NULL);
+    if (hThread == NULL) {
+        // Gestion des erreurs
+        return 1;
+    }
+
 
     SOCKET sock;
     SOCKADDR_IN serverAddr;
@@ -107,6 +127,8 @@ int main()
         }
     }
 
+    WaitForSingleObject(hThread, INFINITE);
+    CloseHandle(hThread);
     // Nettoyage et fermeture
     SSL_free(ssl);
     closesocket(sock);

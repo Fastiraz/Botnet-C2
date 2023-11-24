@@ -212,50 +212,8 @@ const char *ftexec(char *command) {
                 } 
             } 
         }
-
-
-
-
-        else if (strcmp(token, "fonction2") == 0) {
-            token = strtok(NULL, " "); // Obtient le deuxième mot (paramètre a)
-            if (token != NULL) {
-                int a = atoi(token);
-
-                token = strtok(NULL, " "); // Obtient le troisième mot (paramètre b)
-                if (token != NULL) {
-                    int b = atoi(token);
-                    //fonction2(a, b);
-                } else {
-                    printf("Paramètre b manquant.\n");
-                }
-            } else {
-                printf("Paramètre a manquant.\n");
-            }
-        }
-        
-
-        } else if (strcmp(token, "fonction2") == 0) {
-            token = strtok(NULL, " "); // Obtient le deuxième mot (paramètre a)
-            if (token != NULL) {
-                int a = atoi(token);
-
-                token = strtok(NULL, " "); // Obtient le troisième mot (paramètre b)
-                if (token != NULL) {
-                    int b = atoi(token);
-                    //fonction2(a, b);
-                } else {
-                    printf("Paramètre b manquant.\n");
-                }
-            } else {
-                printf("Paramètre a manquant.\n");
-            }
-        }
-
-
-         else {
-            printf("Fonction inconnue.\n");
-            Sleep(5000);
-        }
+    return "Aucune fonction #";
     }
+}
 
 // A faire en se basant sur le nombre de fonction et le nombre d'arguments
